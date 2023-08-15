@@ -31,14 +31,14 @@ class StaffRequest extends FormRequest
                         $rules = [
                             'name' => 'required',
                             'email' => 'required|unique:staffs',
-                            'tel' => 'required|regex:/^\d{4}-\d{4}-\d{4}$/'
+                            'tel' => 'required'
                         ];
                         break;
                     case 'edit':
                         $rules = [
                             'name' => 'required',
                             'email' => 'required',
-                            'tel' => 'required|regex:/^\d{4}-\d{4}-\d{4}$/'
+                            'tel' => 'required'
                         ];
                         break;
                     default:

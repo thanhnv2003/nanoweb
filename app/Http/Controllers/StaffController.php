@@ -14,7 +14,9 @@ class StaffController extends Controller
         $currentPage = request('page', 1);
         $data = Staffs::paginate($perPage);
         if ($request->isMethod('POST') && $request->name != ''){
-            $data = Staffs::where('name', 'like', '%'.$request->name.'%')->orderBy('id','asc')->get();
+            $data = Staffs::where('name', 'like', '%'.$request->name.'%')
+                ->orderBy('id','asc')
+                ->paginate($perPage);
         }
         return view('layout.list', compact('data'));
     }
@@ -26,6 +28,10 @@ class StaffController extends Controller
             $name = strip_tags($name);
             $name = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
             $params['name'] =  $name;
+
+            $tel = $request->input('tel');
+            $tel = str_replace('-', '', $tel);
+            $params['tel'] =  $tel;
 
             $result = Staffs::create($params);
             if ($result->id){
@@ -43,6 +49,10 @@ class StaffController extends Controller
             $name = strip_tags($name);
             $name = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
             $params['name'] =  $name;
+
+            $tel = $request->input('tel');
+            $tel = str_replace('-', '', $tel);
+            $params['tel'] =  $tel;
 
             $result = $data->update($params);
             if ($result){

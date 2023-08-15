@@ -14,7 +14,7 @@
             </div>
             <div class="form-group">
                 <label for="tel">Tel:</label>
-                <input type="text" class="form-control" id="tel" name="tel" value="{{$data->tel}}">
+                <input type="text" class="form-control" id="tel" name="tel" value="{{ substr_replace($data->tel, '-', 4, 0) }}">
             </div>
             <button type="submit" class="btn btn-primary my-3">Update</button>
             <button type="reset" class="btn btn-primary my-3 mx-3">Delete</button>
