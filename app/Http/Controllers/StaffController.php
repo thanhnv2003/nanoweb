@@ -12,7 +12,7 @@ class StaffController extends Controller
     public function list(Request $request){
         $perPage = 10;
         $currentPage = request('page', 1);
-        $data = Staffs::paginate($perPage);
+        $data = Staffs::orderBy('id', 'asc')->paginate($perPage);
         if ($request->isMethod('POST') && $request->name != ''){
             $data = Staffs::where('name', 'like', '%'.$request->name.'%')
                 ->orderBy('id','asc')

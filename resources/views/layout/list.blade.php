@@ -15,7 +15,7 @@
             <th scope="row"><a href="{{route('edit', [$value->id])}}">{{$value->id}}</a></th>
             <td>{!! htmlspecialchars_decode($value->name) !!}</td>
             <td>{{$value->email}}</td>
-            <td>{{ substr_replace($value->tel, '-', 4, 0) }}</td>
+            <td>{{substr_replace(substr_replace($value->tel, '-', 4, 0),'-',9,0) }}</td>
         </tr>
         @endforeach
         </tbody>
