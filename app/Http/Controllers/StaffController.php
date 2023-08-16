@@ -20,8 +20,9 @@ class StaffController extends Controller
         }
         return view('layout.list', compact('data'));
     }
-    public function add(StaffRequest $request){
+    public function add(Request $request){
         if ($request->isMethod('POST')){
+//            dd($request->all());
             $params = $request->except('_token');
 
             $name = $request->input('name');
@@ -29,9 +30,15 @@ class StaffController extends Controller
             $name = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
             $params['name'] =  $name;
 
-            $tel = $request->input('tel');
-            $tel = str_replace('-', '', $tel);
+            $tel = str_replace('-', '', $request->input('tel'));
             $params['tel'] =  $tel;
+            $request->merge(['tel' => $tel]);
+
+            $request->validate([
+                'name' => 'required',
+                'email' => 'required|unique:staffs',
+                'tel' => 'required|max_digits:14|numeric'
+            ]);
 
             $result = Staffs::create($params);
             if ($result->id){
@@ -40,7 +47,7 @@ class StaffController extends Controller
         }
         return view('layout.add');
     }
-    public function edit(StaffRequest $request, $id){
+    public function edit(Request $request, $id){
         $data = Staffs::find($id);
         if ($request->isMethod('POST')){
             $params = $request->all();
@@ -50,9 +57,15 @@ class StaffController extends Controller
             $name = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
             $params['name'] =  $name;
 
-            $tel = $request->input('tel');
-            $tel = str_replace('-', '', $tel);
+            $tel = str_replace('-', '', $request->input('tel'));
             $params['tel'] =  $tel;
+            $request->merge(['tel' => $tel]);
+
+            $request->validate([
+                'name' => 'required',
+                'email' => 'required',
+                'tel' => 'required|max_digits:14|numeric',
+            ]);
 
             $result = $data->update($params);
             if ($result){

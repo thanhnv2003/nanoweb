@@ -31,7 +31,7 @@ class StaffRequest extends FormRequest
                         $rules = [
                             'name' => 'required',
                             'email' => 'required|unique:staffs',
-                            'tel' => 'required'
+                            'tel' => 'required|numeric'
                         ];
                         break;
                     case 'edit':
